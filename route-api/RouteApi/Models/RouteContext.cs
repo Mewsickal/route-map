@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace RouteApi.Models
 {
-    public class RoutesContext : DbContext
+    public class RouteContext : DbContext
     {
-        public RoutesContext(DbContextOptions options) : base(options)
+        public RouteContext(DbContextOptions options) : base(options)
         {
         }
 
