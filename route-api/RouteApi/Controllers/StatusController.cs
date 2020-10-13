@@ -23,7 +23,16 @@ namespace RouteApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Status>>> GetStatuses()
         {
-            return await _context.Statuses.ToListAsync();
+            //return await _context.Statuses
+            //    .GroupBy(status => status.VehicleId)
+            //    .Select(statusGroup => statusGroup.OrderByDescending(status => status.Notified).First())                
+            //    .ToListAsync();
+
+            return await _context.Vehicles
+                .Include(v => v.Statuses)
+                .ThenInclude(s => s.Vehicle)
+                .Select(v => v.Statuses.OrderByDescending(s => s.Notified).First())
+                .ToListAsync();
         }
 
         [HttpGet("{id}")]

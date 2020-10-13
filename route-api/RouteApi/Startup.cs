@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using RouteApi.Models;
 
 namespace RouteApi
@@ -29,7 +30,12 @@ namespace RouteApi
             services.AddDbContext<RouteContext>(options =>
                 options.UseInMemoryDatabase("RoutesDB"));
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    options.SerializerSettings.Formatting = Formatting.Indented;
+                });
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, RouteContext dbContext)
         {
