@@ -31,12 +31,14 @@ namespace RouteApi
 
             services.AddControllers();
         }
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, RouteContext dbContext)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            dbContext.Database.EnsureCreated();
 
             app.UseRouting();
 
