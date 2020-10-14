@@ -42,7 +42,8 @@ namespace RouteApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Vehicle>> PostVehicle(Vehicle vehicle)
         {
-            _context.Vehicles.Add(vehicle);
+
+            _context.Vehicles.Add(new Vehicle { Name = vehicle.Name });
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetVehicle", new { id = vehicle.Id }, vehicle);

@@ -13,6 +13,10 @@ export class StatusService implements OnDestroy {
   private stopPolling = new Subject();
   statuses$: Observable<Status[]>;
 
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);
@@ -43,6 +47,12 @@ export class StatusService implements OnDestroy {
       .pipe(
         catchError(this.handleError<Status[]>('getVehicleStatus', null)
         ));
+  }
+
+  createVehicle(vehicle: Vehicle): Observable<Vehicle> {
+    return this.http.post<Vehicle>(`${this.baseUrl}vehicles`, vehicle, this.httpOptions).pipe(
+      catchError(this.handleError<Vehicle>('createVehicle'))
+    );
   }
 
   ngOnDestroy() {
