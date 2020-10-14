@@ -28,7 +28,7 @@ namespace RouteApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<RouteContext>(options =>
-                options.UseInMemoryDatabase("RoutesDB"));
+                options.UseSqlServer(Configuration.GetConnectionString("RouteDatabase")));
 
             services.AddControllers()
                 .AddNewtonsoftJson(options =>

@@ -21,5 +21,7 @@ namespace RouteApi.Models
         public int? VehicleId { get; set; }
 
         public Vehicle Vehicle { get; set; }
+
+        public bool IsLatest { get; set; }
     }
 }

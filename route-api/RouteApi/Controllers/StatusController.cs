@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RouteApi.Models;
@@ -23,11 +21,9 @@ namespace RouteApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Status>>> GetStatuses()
         {
-            return await _context.Vehicles
-                .Include(v => v.Statuses)
-                .ThenInclude(s => s.Vehicle)
-                .Select(v => v.Statuses.OrderByDescending(s => s.Notified.Ticks).FirstOrDefault())
-                .Where(status => status != null)
+            return await _context.Statuses
+                .Include(status => status.Vehicle)
+                .Where(o => o.IsLatest)
                 .ToListAsync();
         }
 
@@ -70,6 +66,12 @@ namespace RouteApi.Controllers
             {
                 return NotFound();
             }
+
+            await _context.Statuses
+                .Where(dbStatus => dbStatus.VehicleId == status.VehicleId && dbStatus.IsLatest)
+                .ForEachAsync(dbStatus => dbStatus.IsLatest = false);
+
+            status.IsLatest = true;
 
             _context.Statuses.Add(status);
             await _context.SaveChangesAsync();
