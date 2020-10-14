@@ -36,11 +36,6 @@ namespace RouteApi
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                     options.SerializerSettings.Formatting = Formatting.Indented;
                 });
-
-            services.AddCors(c =>
-            {
-                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
-            });
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, RouteContext dbContext)
         {
@@ -57,8 +52,6 @@ namespace RouteApi
             {
                 endpoints.MapControllers();
             });
-
-            app.UseCors(options => options.AllowAnyOrigin());
         }
     }
 }

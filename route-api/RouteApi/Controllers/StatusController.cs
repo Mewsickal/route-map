@@ -26,7 +26,7 @@ namespace RouteApi.Controllers
             return await _context.Vehicles
                 .Include(v => v.Statuses)
                 .ThenInclude(s => s.Vehicle)
-                .Select(v => v.Statuses.OrderByDescending(s => s.Notified).FirstOrDefault())
+                .Select(v => v.Statuses.OrderByDescending(s => s.Notified.Ticks).FirstOrDefault())
                 .Where(status => status != null)
                 .ToListAsync();
         }

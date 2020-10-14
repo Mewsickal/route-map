@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StatusService } from '../status.service';
 import { Status, Vehicle } from '../interfaces';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-status-map',
@@ -9,18 +10,12 @@ import { Status, Vehicle } from '../interfaces';
 })
 export class StatusMapComponent implements OnInit {
 
-  statuses: Status[];
+  statuses$: Observable<Status[]>;
   displayedColumns: string[] = ['notified', 'longitude', 'latitude', 'speed', 'vehicle'];
 
   constructor(private statusService: StatusService) { }
 
-  getStatuses(): void {
-    this.statusService
-      .getLatestStatus()
-      .subscribe(response => this.statuses = response);
-  }
-
   ngOnInit(): void {
-    this.getStatuses();
+    this.statuses$ = this.statusService.getLatestStatus();
   }
 }

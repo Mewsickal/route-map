@@ -1,5 +1,5 @@
 <p></p>
-<table mat-table [dataSource]="statuses" matSort matSortActive="notified" matSortDisableClear matSortDirection="desc">
+<table mat-table [dataSource]="statuses$" matSort matSortActive="notified" matSortDisableClear matSortDirection="desc">
     <ng-container matColumnDef="notified">
         <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Notified</th>
         <td mat-cell *matCellDef="let row">{{row.notified | date}}</td>
