@@ -18,7 +18,7 @@ namespace RouteApi.Models
         public DateTime Notified { get; set; }
 
         [Required]
-        public int VehicleId { get; set; }
+        public int? VehicleId { get; set; }
 
         public Vehicle Vehicle { get; set; }
     }

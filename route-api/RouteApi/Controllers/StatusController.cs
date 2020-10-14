@@ -23,11 +23,6 @@ namespace RouteApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Status>>> GetStatuses()
         {
-            //return await _context.Statuses
-            //    .GroupBy(status => status.VehicleId)
-            //    .Select(statusGroup => statusGroup.OrderByDescending(status => status.Notified).First())                
-            //    .ToListAsync();
-
             return await _context.Vehicles
                 .Include(v => v.Statuses)
                 .ThenInclude(s => s.Vehicle)
@@ -35,7 +30,22 @@ namespace RouteApi.Controllers
                 .ToListAsync();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("vehicles/{id}")]
+        public async Task<ActionResult<IEnumerable<Status>>> GetStatusForVehicle(int id)
+        {
+            var vehicle = await _context.Vehicles
+                .Include(vehicle => vehicle.Statuses)
+                .FirstOrDefaultAsync(vehicle => vehicle.Id == id);
+
+            if (vehicle == null)
+            {
+                return NotFound();
+            }
+
+            return vehicle.Statuses;
+        }
+
+        [HttpGet("{id:int}")]
         public async Task<ActionResult<Status>> GetStatus(int id)
         {
             var status = await _context.Statuses.FindAsync(id);
@@ -51,6 +61,13 @@ namespace RouteApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Status>> PostStatus(Status status)
         {
+            var vehicle = await _context.Vehicles.FindAsync(status.VehicleId);
+
+            if (vehicle == null)
+            {
+                return NotFound();
+            }
+
             _context.Statuses.Add(status);
             await _context.SaveChangesAsync();
 
