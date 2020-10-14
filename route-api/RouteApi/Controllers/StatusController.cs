@@ -43,7 +43,9 @@ namespace RouteApi.Controllers
                 return NotFound();
             }
 
-            return vehicle.Statuses;
+            return vehicle.Statuses
+                .OrderByDescending(s => s.Notified.Ticks)
+                .ToList();
         }
 
         [HttpGet("{id:int}")]

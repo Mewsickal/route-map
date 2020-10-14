@@ -38,6 +38,13 @@ export class StatusService implements OnDestroy {
     );
   }
 
+  getVehicleStatus(vehicleid): Observable<Status[]> {
+    return this.http.get<Status[]>(`${this.baseUrl}status/vehicles/${vehicleid}`)
+      .pipe(
+        catchError(this.handleError<Status[]>('getVehicleStatus', null)
+        ));
+  }
+
   ngOnDestroy() {
     this.stopPolling.next();
   }

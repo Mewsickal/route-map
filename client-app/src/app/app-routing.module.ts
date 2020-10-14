@@ -5,7 +5,7 @@ import { VehicleStatusComponent } from './vehicle-status/vehicle-status.componen
 
 const routes: Routes = [
   { path: 'statusmap', component: StatusMapComponent },
-  { path: 'vehiclestatus', component: VehicleStatusComponent },
+  { path: 'vehiclestatus/:id', component: VehicleStatusComponent },
   { path: '', redirectTo: '/statusmap', pathMatch: 'full' },
 ];
 

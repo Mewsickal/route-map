@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTableModule } from '@angular/material/table';
+import { MatSliderModule } from '@angular/material/slider';
 
 
 import { StatusMapComponent } from './status-map/status-map.component';
@@ -27,7 +28,8 @@ import { VehicleStatusComponent } from './vehicle-status/vehicle-status.componen
     MatToolbarModule,
     MatTabsModule,
     MatTableModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSliderModule
   ],
   providers: [],
   bootstrap: [AppComponent]
