@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StatusService } from '../status.service';
+import { Status, Vehicle } from '../interfaces';
 
 @Component({
   selector: 'app-status-map',
@@ -8,14 +9,15 @@ import { StatusService } from '../status.service';
 })
 export class StatusMapComponent implements OnInit {
 
-  statuses: any;
+  statuses: Status[];
+  displayedColumns: string[] = ['notified', 'longitude', 'latitude', 'speed', 'vehicle'];
 
   constructor(private statusService: StatusService) { }
 
   getStatuses(): void {
     this.statusService
       .getLatestStatus()
-      .subscribe(response => this.statuses = JSON.stringify(response));
+      .subscribe(response => this.statuses = response);
   }
 
   ngOnInit(): void {
